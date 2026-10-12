@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gpsmap_username_list" model="ir.ui.view">
+        <field name="name">unifiedtalk.gpsmap.username.list</field>
+        <field name="model">unifiedtalk.gpsmap.username</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" create="false" delete="false">
+                <field name="name" readonly="1"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_gps_usernames" model="ir.actions.act_window">
+        <field name="name">Assigned users</field>
+        <field name="res_model">unifiedtalk.gpsmap.username</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

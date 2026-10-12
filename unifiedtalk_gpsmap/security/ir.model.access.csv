@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_unifiedtalk_gpsmap_username,access.unifiedtalk.gpsmap.username,model_unifiedtalk_gpsmap_username,base.group_system,1,1,1,1
+access_unifiedtalk_gpsmap_activation,access.unifiedtalk.gpsmap.activation,model_unifiedtalk_gpsmap_activation,base.group_system,1,1,1,1

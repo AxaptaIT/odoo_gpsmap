@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_gpsmap" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.gpsmap</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="GPS Map" name="unifiedtalk_gpsmap">
+                    <block title="Activation">
+                        <setting string="Activation key" help="Replacing the key loads a new gateway, company, and registration type.">
+                            <field name="gpsmap_activation_key" password="True"/>
+                        </setting>
+                        <setting string="Connection">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="gpsmap_registration_type" class="col-lg-3"/>
+                                    <field name="gpsmap_registration_type"/>
+                                </div>
+                                <div class="row">
+                                    <label for="gpsmap_gateway" class="col-lg-3"/>
+                                    <field name="gpsmap_gateway"/>
+                                </div>
+                                <div class="row">
+                                    <label for="gpsmap_company_id" class="col-lg-3"/>
+                                    <field name="gpsmap_company_id"/>
+                                </div>
+                                <div class="row">
+                                    <label for="gpsmap_application_id" class="col-lg-3"/>
+                                    <field name="gpsmap_application_id"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

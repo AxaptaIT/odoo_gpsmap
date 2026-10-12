@@ -1,0 +1,21 @@
+{
+    'name': 'GPS Map',
+    'summary': 'Open the live GPS map after signing in to Odoo.',
+    'version': '19.0.1.0.0',
+    'category': 'Operations',
+    'license': 'LGPL-3',
+    'author': 'Unified Talk',
+    'website': 'https://unifiedtalk.com',
+    'depends': ['base', 'web'],
+    'data': [
+        'security/gps_security.xml',
+        'security/ir.model.access.csv',
+        'wizard/activation_wizard_views.xml',
+        'views/gps_username_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/menu.xml',
+    ],
+    'images': ['static/description/icon.png'],
+    'installable': True,
+    'application': True,
+}

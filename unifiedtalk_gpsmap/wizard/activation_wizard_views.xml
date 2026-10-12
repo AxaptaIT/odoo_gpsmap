@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gpsmap_activation_form" model="ir.ui.view">
+        <field name="name">unifiedtalk.gpsmap.activation.form</field>
+        <field name="model">unifiedtalk.gpsmap.activation</field>
+        <field name="arch" type="xml">
+            <form string="Activate GPS Map">
+                <sheet>
+                    <p>Enter the activation key supplied for this company. Odoo loads the gateway and the registration type from that key.</p>
+                    <group>
+                        <field name="activation_key" password="True"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_activate" type="object" string="Activate" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_activation_wizard" model="ir.actions.act_window">
+        <field name="name">Activate GPS Map</field>
+        <field name="res_model">unifiedtalk.gpsmap.activation</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
