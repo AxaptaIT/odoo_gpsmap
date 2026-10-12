@@ -39,11 +39,11 @@ class GpsMapAccount(models.AbstractModel):
         else:
             url = ACTIVATION_URL
         payload = self._post(url, {'activationKey': key})
-        registration = (payload.get('registrationType') or '').strip().lower()
+        registration = self.normalize_type(payload.get('registrationType'))
         gateway = (payload.get('gateway') or '').strip().rstrip('/')
         application_id = (payload.get('applicationId') or '').strip()
         company_id = (payload.get('companyId') or '').strip()
-        if registration not in ('open', 'permitted') or not gateway or not application_id or not company_id:
+        if registration not in ('enterprise', 'limited') or not gateway or not application_id or not company_id:
             raise UserError(_('The activation key did not return a complete setup.'))
         params = self._params()
         params.set_param('unifiedtalk_gpsmap.activation_key', key)
@@ -64,15 +64,22 @@ class GpsMapAccount(models.AbstractModel):
             'remove': bool(remove),
         })
 
+    def normalize_type(self, value):
+        registration = (value or '').strip().lower()
+        return {'open': 'enterprise', 'permitted': 'limited'}.get(registration, registration)
+
+    def registration_type(self):
+        return self.normalize_type(self._get('unifiedtalk_gpsmap.registration_type'))
+
     def handoff(self, user):
-        registration = self._get('unifiedtalk_gpsmap.registration_type')
+        registration = self.registration_type()
         body = {'activationKey': self._get('unifiedtalk_gpsmap.activation_key')}
-        if registration == 'permitted':
+        if registration == 'limited':
             assigned = self.env['unifiedtalk.gpsmap.username'].sudo().search([('user_id', '=', user.id)], limit=1)
             if not assigned:
                 raise UserError(_('An administrator must assign a GPS Map username to you.'))
             body['userName'] = assigned.name
-        elif registration == 'open':
+        elif registration == 'enterprise':
             email = self.identity(user)
             if not email:
                 raise UserError(_('This Odoo user needs an email before the map can open.'))
@@ -87,13 +94,13 @@ class GpsMapAccount(models.AbstractModel):
                 action = self.env.ref('unifiedtalk_gpsmap.action_activation_wizard').sudo().read()[0]
                 return action
             return self._notice(_('Setup is not finished. An administrator must enter the activation key.'))
-        registration = self._get('unifiedtalk_gpsmap.registration_type')
+        registration = self.registration_type()
         user = self.env.user
-        if registration not in ('open', 'permitted'):
+        if registration not in ('enterprise', 'limited'):
             return self._notice(_('This activation key is not valid.'))
-        if registration == 'open' and not user.has_group('unifiedtalk_gpsmap.group_gps_map'):
+        if registration == 'enterprise' and not user.has_group('unifiedtalk_gpsmap.group_gps_map'):
             return self._notice(_('An administrator must add you to the GPS Map group.'))
-        if registration == 'permitted':
+        if registration == 'limited':
             assigned = self.env['unifiedtalk.gpsmap.username'].sudo().search([('user_id', '=', user.id)], limit=1)
             if not assigned:
                 return self._notice(_('An administrator must assign a GPS Map username to you.'))

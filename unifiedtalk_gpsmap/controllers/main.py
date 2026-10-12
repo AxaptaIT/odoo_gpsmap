@@ -14,12 +14,12 @@ class GpsMapController(http.Controller):
         user = request.env.user
         if not account.activated():
             return self._page('Setup is not finished. An administrator must enter the activation key.')
-        registration = account._get('unifiedtalk_gpsmap.registration_type')
-        if registration not in ('open', 'permitted'):
+        registration = account.registration_type()
+        if registration not in ('enterprise', 'limited'):
             return self._page('This activation key is not valid.')
-        if registration == 'open' and not user.has_group('unifiedtalk_gpsmap.group_gps_map'):
+        if registration == 'enterprise' and not user.has_group('unifiedtalk_gpsmap.group_gps_map'):
             return self._page('An administrator must add you to the GPS Map group.')
-        if registration == 'permitted':
+        if registration == 'limited':
             assigned = request.env['unifiedtalk.gpsmap.username'].sudo().search([('user_id', '=', user.id)], limit=1)
             if not assigned:
                 return self._page('An administrator must assign a GPS Map username to you.')

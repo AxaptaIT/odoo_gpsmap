@@ -42,6 +42,6 @@ class GpsMapUsername(models.Model):
 
     @api.constrains('user_id')
     def _check_registration_type(self):
-        registration = self.env['unifiedtalk.gpsmap.account']._get('unifiedtalk_gpsmap.registration_type')
-        if registration != 'permitted' and any(row.user_id for row in self):
-            raise UserError(_('Usernames can be assigned only when the activation key is permitted.'))
+        registration = self.env['unifiedtalk.gpsmap.account'].registration_type()
+        if registration != 'limited' and any(row.user_id for row in self):
+            raise UserError(_('Usernames can be assigned only when the activation key is limited.'))

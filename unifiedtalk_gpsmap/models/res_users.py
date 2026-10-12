@@ -12,7 +12,7 @@ class ResUsers(models.Model):
             group
             and field in vals
             and not self.env.context.get('gpsmap_skip_sync')
-            and account._get('unifiedtalk_gpsmap.registration_type') == 'open'
+            and account.registration_type() == 'enterprise'
         )
         before = {}
         if watch:
