@@ -1,14 +1,44 @@
-<section class="oe_container">
-    <div class="oe_row">
-        <h2>GPS Map</h2>
-        <p>Open the live fleet map from Odoo. The user signs in to Odoo first. GPS Map then opens already signed in.</p>
-        <p>After installation, an administrator enters the activation key supplied for the company. The key loads the connection. The administrator does not type a gateway, company, or application id.</p>
-        <h3>Who can open the map</h3>
-        <ul>
-            <li><b>Open.</b> An administrator adds the Odoo user to the GPS Map group. Everyone granted that group opens the map as the one user stored on the activation key.</li>
-            <li><b>Permitted.</b> The activation key includes a list of user names. An administrator assigns each name to one Odoo user.</li>
-        </ul>
-        <p>A person who is not logged into Odoo does not see the GPS Map menu.</p>
-        <img src="icon.png" alt="GPS Map" style="width:128px;height:128px;"/>
+<section class="oe_container" style="font-family: 'Segoe UI', Tahoma, sans-serif; color: #24312c; max-width: 1100px; margin: 0 auto;">
+    <div class="oe_row" style="margin-bottom: 28px;">
+        <img src="banner.png" alt="GPS Map" style="width: 100%; height: auto; display: block; border-radius: 12px;"/>
+    </div>
+
+    <div class="oe_row" style="text-align: center; margin: 8px 16px 36px;">
+        <h2 style="font-size: 32px; margin: 0 0 12px; color: #125c44;">The live fleet map, inside Odoo</h2>
+        <p style="font-size: 18px; line-height: 1.5; margin: 0 auto; max-width: 720px; color: #4a463f;">
+            People sign in to Odoo first. GPS Map then opens already signed in. There is no second login page.
+        </p>
+    </div>
+
+    <div class="oe_row" style="display: flex; gap: 16px; flex-wrap: wrap; margin: 0 8px 36px;">
+        <div style="flex: 1; min-width: 220px; background: #f4f7f5; border-radius: 12px; padding: 22px;">
+            <div style="font-size: 13px; letter-spacing: 0.08em; color: #125c44; font-weight: 700;">1</div>
+            <h3 style="margin: 8px 0; font-size: 20px;">Install</h3>
+            <p style="margin: 0; line-height: 1.5; color: #4a463f;">An administrator installs GPS Map from the Apps menu. A person who is not logged into Odoo does not see it.</p>
+        </div>
+        <div style="flex: 1; min-width: 220px; background: #f4f7f5; border-radius: 12px; padding: 22px;">
+            <div style="font-size: 13px; letter-spacing: 0.08em; color: #125c44; font-weight: 700;">2</div>
+            <h3 style="margin: 8px 0; font-size: 20px;">Activate</h3>
+            <p style="margin: 0; line-height: 1.5; color: #4a463f;">The administrator enters one activation key. The key loads the connection. No gateway or company id is typed in.</p>
+        </div>
+        <div style="flex: 1; min-width: 220px; background: #f4f7f5; border-radius: 12px; padding: 22px;">
+            <div style="font-size: 13px; letter-spacing: 0.08em; color: #125c44; font-weight: 700;">3</div>
+            <h3 style="margin: 8px 0; font-size: 20px;">Open the map</h3>
+            <p style="margin: 0; line-height: 1.5; color: #4a463f;">GPS Map appears in the app switcher, next to Sales and Contacts. Opening it launches the live map.</p>
+        </div>
+    </div>
+
+    <div class="oe_row" style="margin: 0 8px 12px;">
+        <h3 style="font-size: 24px; margin: 0 0 16px; color: #125c44;">Who can open the map</h3>
+    </div>
+    <div class="oe_row" style="display: flex; gap: 16px; flex-wrap: wrap; margin: 0 8px 28px;">
+        <div style="flex: 1; min-width: 280px; border: 1px solid #d7e3dc; border-radius: 12px; padding: 22px;">
+            <h3 style="margin: 0 0 8px; font-size: 20px;">Open</h3>
+            <p style="margin: 0; line-height: 1.5; color: #4a463f;">The administrator adds the person to the GPS Map group. Everyone in that group opens the map as the one user stored on the activation key.</p>
+        </div>
+        <div style="flex: 1; min-width: 280px; border: 1px solid #d7e3dc; border-radius: 12px; padding: 22px;">
+            <h3 style="margin: 0 0 8px; font-size: 20px;">Permitted</h3>
+            <p style="margin: 0; line-height: 1.5; color: #4a463f;">The activation key includes a list of user names. The administrator assigns each name to one Odoo user from Assigned users.</p>
+        </div>
     </div>
 </section>

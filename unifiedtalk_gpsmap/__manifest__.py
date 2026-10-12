@@ -1,7 +1,7 @@
 {
     'name': 'GPS Map',
     'summary': 'Open the live GPS map after signing in to Odoo.',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Operations',
     'license': 'LGPL-3',
     'author': 'Unified Talk',
