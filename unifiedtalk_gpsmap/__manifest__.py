@@ -1,11 +1,11 @@
 {
     'name': 'GPS Map',
     'summary': 'Open the live GPS map after signing in to Odoo.',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Operations',
     'license': 'LGPL-3',
-    'author': 'Unified Talk',
-    'website': 'https://unifiedtalk.com',
+    'author': 'Zatelco',
+    'website': 'https://zatelco.com',
     'depends': ['base', 'web'],
     'data': [
         'security/gps_security.xml',
