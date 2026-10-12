@@ -21,8 +21,14 @@ class GpsMapAccount(models.AbstractModel):
     def activated(self):
         return bool(self._get('unifiedtalk_gpsmap.activation_key') and self._get('unifiedtalk_gpsmap.gateway'))
 
-    def identity(self, user):
-        return (user.email or user.login or '').strip()
+    def odoo_username(self, user):
+        return (user.login or '').strip()
+
+    def person_name(self, user):
+        parts = (user.name or '').strip().split(' ', 1)
+        first = parts[0] if parts and parts[0] else ''
+        last = parts[1] if len(parts) > 1 else ''
+        return first, last
 
     def group_field(self):
         users = self.env['res.users']
@@ -38,7 +44,14 @@ class GpsMapAccount(models.AbstractModel):
             url = self._get('unifiedtalk_gpsmap.gateway').rstrip('/') + '/api/sso/AppAuth/ActivateOdoo'
         else:
             url = ACTIVATION_URL
-        payload = self._post(url, {'activationKey': key})
+        user = self.env.user
+        first, last = self.person_name(user)
+        payload = self._post(url, {
+            'activationKey': key,
+            'userName': self.odoo_username(user),
+            'firstName': first,
+            'lastName': last,
+        })
         registration = self.normalize_type(payload.get('registrationType'))
         gateway = (payload.get('gateway') or '').strip().rstrip('/')
         application_id = (payload.get('applicationId') or '').strip()
@@ -55,12 +68,15 @@ class GpsMapAccount(models.AbstractModel):
         return payload
 
     def ensure_user(self, user, remove=False):
-        email = self.identity(user)
-        if not email:
-            raise UserError(_('This Odoo user needs an email before they can be added to GPS Map.'))
+        username = self.odoo_username(user)
+        if not username:
+            raise UserError(_('This Odoo user needs a username before they can be added to GPS Map.'))
+        first, last = self.person_name(user)
         self._post(self._gateway_url('EnsureOdooUser'), {
             'activationKey': self._get('unifiedtalk_gpsmap.activation_key'),
-            'email': email,
+            'userName': username,
+            'firstName': first,
+            'lastName': last,
             'remove': bool(remove),
         })
 
@@ -80,13 +96,20 @@ class GpsMapAccount(models.AbstractModel):
                 raise UserError(_('An administrator must assign a GPS Map username to you.'))
             body['userName'] = assigned.name
         elif registration == 'enterprise':
-            email = self.identity(user)
-            if not email:
-                raise UserError(_('This Odoo user needs an email before the map can open.'))
-            body['email'] = email
+            username = self.odoo_username(user)
+            if not username:
+                raise UserError(_('This Odoo user needs a username before the map can open.'))
+            body['userName'] = username
         else:
             raise UserError(_('This activation key is not valid.'))
         return self._post(self._gateway_url('OdooHandoff'), body)
+
+    def deactivate(self):
+        key = self._get('unifiedtalk_gpsmap.activation_key')
+        gateway = self._get('unifiedtalk_gpsmap.gateway')
+        if not key or not gateway:
+            return
+        self._post(self._gateway_url('DeactivateOdoo'), {'activationKey': key})
 
     def action_open(self):
         if not self.activated():
